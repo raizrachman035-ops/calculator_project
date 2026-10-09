@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Persegi Panjang - Tugas 1</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f1f5f9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            color: #1e293b;
+        }
+
+        .card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 480px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+            padding: 32px 28px;
+            transition: transform 0.2s ease;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header .icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .header h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1e1b4b;
+        }
+
+        .header p {
+            font-size: 0.88rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 10px 14px;
+            transition: all 0.2s ease;
+            background: #f8fafc;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: #6366f1;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+        }
+
+        .input-wrapper input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 1rem;
+            color: #0f172a;
+            background: transparent;
+        }
+
+        .input-wrapper .unit {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #94a3b8;
+            margin-left: 8px;
+        }
+
+        .btn-hitung {
+            width: 100%;
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            color: #ffffff;
+            border: none;
+            padding: 13px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+            transition: all 0.2s ease;
+            margin-top: 8px;
+        }
+
+        .btn-hitung:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45);
+        }
+
+        .btn-hitung:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            height: 1px;
+            background: #f1f5f9;
+            margin: 24px 0;
+        }
+
+        .result-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .result-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .result-item {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 12px 14px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .result-item.highlight {
+            background: #eef2ff;
+            border-color: #c7d2fe;
+        }
+
+        .result-item .label {
+            font-size: 0.78rem;
+            color: #64748b;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .result-item .value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e1b4b;
+        }
+
+        .result-item .value span {
+            color: #4f46e5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="header">
+            <span class="icon">📐</span>
+            <h1>Luas & Keliling Persegi Panjang</h1>
+            <p>Masukkan nilai panjang dan lebar untuk menghitung</p>
+        </div>
+
+        <!-- Form Input -->
+        <div class="form-group">
+            <label for="inputPanjang">Panjang</label>
+            <div class="input-wrapper">
+                <input type="number" id="inputPanjang" placeholder="Masukkan panjang..." min="0" step="any">
+                <span class="unit">meter</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputLebar">Lebar</label>
+            <div class="input-wrapper">
+                <input type="number" id="inputLebar" placeholder="Masukkan lebar..." min="0" step="any">
+                <span class="unit">meter</span>
+            </div>
+        </div>
+
+        <button type="button" class="btn-hitung" id="btnHitung" onclick="hitung()">Hitung Sekarang</button>
+
+        <div class="divider"></div>
+
+        <!-- Tampilan Hasil (ID tetap sesuai tugas awal) -->
+        <div class="result-container">
+            <div class="result-title">Hasil Perhitungan</div>
+            <div class="result-grid">
+                <div class="result-item">
+                    <span class="label">Panjang</span>
+                    <div class="value"><span id="panjang">-</span> m</div>
+                </div>
+
+                <div class="result-item">
+                    <span class="label">Lebar</span>
+                    <div class="value"><span id="lebar">-</span> m</div>
+                </div>
+
+                <div class="result-item highlight">
+                    <span class="label">Luas (P × L)</span>
+                    <div class="value"><span id="luas">-</span> m<sup>2</sup></div>
+                </div>
+
+                <div class="result-item highlight">
+                    <span class="label">Keliling (2 × (P + L))</span>
+                    <div class="value"><span id="keliling">-</span> m</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function hitung() {
+            /*
+                ==Task 1==
+                Mengambil nilai panjang dan lebar dari elemen input
+                lalu ubah tipe datanya menjadi number menggunakan parseFloat() atau Number()
+            */
+            let panjangInput = document.getElementById("inputPanjang").value;
+            let lebarInput = document.getElementById("inputLebar").value;
+
+            let panjang = parseFloat(panjangInput);
+            let lebar = parseFloat(lebarInput);
+
+            // Validasi jika input belum diisi atau angka tidak valid
+
+            /*
+                ==Task 2==
+                Buat variable luas yang berisi hasil perkalian panjang dan lebar
+            */
+            let luas = panjang * lebar;
+
+            /*
+                ==Task 3==
+                Buat variable keliling yang berisi hasil 2 * (panjang + lebar)
+            */
+            let keliling = 2 * (panjang + lebar);
+
+            /*
+                Menampilkan hasil perhitungan ke elemen span HTML
+            */
+            document.getElementById("panjang").innerText = panjang;
+            document.getElementById("lebar").innerText = lebar;
+            document.getElementById("luas").innerText = luas;
+            document.getElementById("keliling").innerText = keliling;
+        }
+
+        // Jalankan hitung() sekali di awal agar saat halaman pertama kali dibuka langsung ada hasilnya
+        hitung();
+
+        // Bonus: Update otomatis ketika user mengetik atau mengubah nilai input
+        document.getElementById("inputPanjang").addEventListener("input", hitung);
+        document.getElementById("inputLebar").addEventListener("input", hitung);
+    </script>
+</body>
+</html>
